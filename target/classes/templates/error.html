@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="head :: head"></div>
+
+<body>
+<div class="background-img" th:style="'background-image: url(' + @{/bg_img.jpg} + ')'"></div>
+<div class="container"><br><br><br>
+  <h1>oops...</h1>
+  <h1>Looks like something went wrong!</h1>
+  <h1 th:text="${error}"></h1><br>
+  <h3>Click <a href="/">Here</a> to return to the home page.</h3>
+
+</div>
+</body>
+</html>

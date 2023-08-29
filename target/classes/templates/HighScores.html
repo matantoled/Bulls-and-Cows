@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<div th:include="head :: head"></div>
+
+<body>
+<div class="background-img" th:style="'background-image: url(' + @{/bg_img.jpg} + ')'"></div>
+<div class="container">
+  <div th:include="gameButtons :: gameButtons"></div>
+  <div class="row my-2" sec:authorize="hasRole('ADMIN')">
+    <div class="col-md-3" >
+      <form th:action="@{/resetDb}" method="post">
+        <button type="submit" class="btn btn-dark my-2">
+          Reset high scores
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="alert alert-secondary my-3" role="alert">
+    <h1>High Scores</h1>
+
+<table class="table table-primary">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Score</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="userScore, stat: ${highScores}">
+    <td th:text="${stat.count}" />
+    <td th:text="${userScore.name}" />
+    <td th:text="${userScore.score}" />
+  </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+</body>
+</html>

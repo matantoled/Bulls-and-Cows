@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:include="head :: head"></div>
+<body>
+
+<div class="background-img" th:style="'background-image: url(' + @{/bg_img.jpg} + ')'"></div>
+<div class="container">
+  <div th:include="gameButtons :: gameButtons"></div>
+  <div class="alert alert-info my-3" role="alert">
+    <h1>You Won! Your score is: <span th:text="${score}"></span></h1>
+    <p>You may enter your name below to record your score.</p>
+  </div>
+
+  <form th:action="@{/highScores}" th:object="${userGameResult}" method="post">
+    <input type="text"
+           class="form-control form-control-lg"
+           th:field="*{name}"
+           placeholder="Enter your name">
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+    <input type="hidden" th:field="*{score}"/>
+    <button type="submit" class="btn btn-primary my-2">
+      Submit
+    </button>
+  </form>
+</div>
+
+</body>
+</html>

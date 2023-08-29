@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:include="head :: head"></div>
+
+<body>
+<div class="background-img" th:style="'background-image: url(' + @{/bg_img.jpg} + ')'"></div>
+<div class="container">
+    <div th:include="gameButtons :: gameButtons"></div>
+    <form th:action="@{/submitResult}" method="post">
+        <div class="row">
+            <div class="col-3" th:each="i : ${#numbers.sequence(0,3)}">
+                <select class="form-select" th:name="'guesses[' + ${i} + ']'">
+                    <option value="" disabled selected>Guess...</option>
+                    <option th:each="number : ${numbers}"
+                            th:value="${number}"
+                            th:text="${number}"
+                            th:selected="${guessesObj.guesses[i] != null && guessesObj.guesses[i] == number}">
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary btn-lg mt-4 mb-2">
+                Go!
+            </button>
+        </div>
+    </form>
+    <div class="row my-2" sec:authorize="hasRole('ADMIN')">
+        <div class="col-md-3" >
+            <button type="button" class="btn btn-success my-2" data-bs-toggle="collapse"
+                    data-bs-target="#solution">
+                Game solution
+            </button>
+        </div>
+    </div>
+    <div id="solution" class="collapse">
+        <div class="card card-body alert alert-primary" role="alert">
+            The solution is: <span th:text="${#strings.listJoin(solution, ', ')}"></span>
+        </div>
+    </div>
+    <div class="alert alert-warning my-3" role="alert" th:text="${message}"></div>
+
+    <table class="table table-bordered table-striped table-primary table-hover">
+        <thead>
+        <tr>
+            <th>Guess</th>
+            <th>Bulls</th>
+            <th>Cows</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="guess , stat : ${guessesObj.guessHistory}">
+            <td>
+                <span th:text="${#strings.listJoin(guess, ', ')}"></span>
+            </td>
+            <td th:text="${bullsAndCows.get(stat.count - 1)[0]}"></td>
+            <td th:text="${bullsAndCows.get(stat.count - 1)[1]}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

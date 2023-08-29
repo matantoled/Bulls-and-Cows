@@ -1,0 +1,62 @@
+<div th:fragment="gameButtons" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <div th:fragment="logout" class="logout my-2" sec:authorize="isAuthenticated()">
+    Logged user: <span sec:authentication="name">?</span>
+    <form th:action="@{/logout}" method="post" style="display:inline">
+      <input type="submit" value="Logout"/>
+    </form>
+  </div>
+  <img src="game_pic.png" class="w-100" alt="bulls and cows">
+  <div class="row my-2">
+    <div class="col-md-4 text-center">
+      <button type="button" class="btn btn-info my-2" data-bs-toggle="collapse"
+              data-bs-target="#gamerules">
+        Game rules
+      </button>
+    </div>
+    <div class="col-md-4 text-center">
+      <button type="button" class="btn btn-warning my-2" data-bs-toggle="collapse"
+              data-bs-target="#scorehistory">
+        Score history
+      </button>
+    </div>
+    <div class="col-md-4 text-center">
+      <a th:href="@{/startNewGame}" class="btn btn-danger my-2">Start new game</a>
+    </div>
+  </div>
+  <div id="gamerules" class="collapse">
+    <div class="card card-body alert alert-primary" role="alert">
+      Bulls and Cows game:<br><br>
+      The program generates 4 random digits, while the player tries to guess them.<br><br>
+      Each digit appears at most once. e.g. 1234 is valid, but 1233 is not valid.<br><br>
+      For every guess that the player makes, we display 2 values:<br>
+      The number of bulls and the number of cows.<br><br>
+      1 bull means the guess contains and the target number have 1 digit in common, and in the correct
+      position.<br>
+      1 cow means the guess and the target have 1 digit in common, but not in correct position.<br>
+      For example if the number to guess is 1234. Guessing 4321 will give 0 bulls and 4 cows.
+      3241 will give 1 bull and 3 cows.<br><br>
+      4 bulls means that the user won the game.
+    </div>
+  </div>
+  <div id="scorehistory" class="collapse">
+    <div class="card card-body alert alert-primary" role="alert">
+        <h1>Score history</h1>
+        <table class="table table-primary">
+            <thead>
+            <tr>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="userScore: ${userScoreHistory}">
+            <td th:text="${userScore.name}"/>
+            <td th:text="${userScore.score}"/>
+            <td th:text="${userScore.date}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>
