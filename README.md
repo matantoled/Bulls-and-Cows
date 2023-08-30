@@ -60,9 +60,6 @@ Now you have a DB named ex4.
 The DB credentials are stored in the application.properties file. You may change them if you want (and create another with the same name).
 2.	Run the project, you should not see any errors in IntelliJ console.
 
-## Initializing the React client (movie-app):
-Open a terminal in form-app and run npm install and then npm start. You should see the client running on http://localhost:3000. You can also open another instance of IntelliJ and open the movie-app folder as a project. You can then run the client from there.
-
 ## How to Play
 
 1. Log in with either the "user" or "admin" role.
